@@ -1,4 +1,4 @@
-package com.chatapp.peertopeerchatapp;
+package com.chatapp.peertopeerchatapp.utils;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

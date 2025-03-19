@@ -1,4 +1,4 @@
-package com.chatapp.peertopeerchatapp;
+package com.chatapp.peertopeerchatapp.client;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

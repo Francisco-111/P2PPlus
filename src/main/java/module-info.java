@@ -2,6 +2,7 @@ module com.chatapp.peertopeerchatapp {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires jbcrypt;
 
 
     opens com.chatapp.peertopeerchatapp to javafx.fxml;

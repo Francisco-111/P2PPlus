@@ -7,6 +7,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegistrationUI extends Application {
 
     private final UserService userService = new UserService();
@@ -27,6 +30,23 @@ public class RegistrationUI extends Application {
             String password = passwordField.getText();
             String email = emailField.getText();
 
+            // Input validation
+            if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
+                messageLabel.setText("All fields are required.");
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                messageLabel.setText("Invalid email format.");
+                return;
+            }
+
+            if (password.length() < 6) {
+                messageLabel.setText("Password must be at least 6 characters.");
+                return;
+            }
+
+            // Attempt registration
             if (userService.registerUser(username, password, email)) {
                 messageLabel.setText("Registration successful! You can now log in.");
             } else {
@@ -40,5 +60,16 @@ public class RegistrationUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Register");
         primaryStage.show();
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

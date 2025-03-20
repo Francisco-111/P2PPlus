@@ -4,7 +4,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 
 public class MessageService {
-    public void saveMessage(int conversationId, int senderId, String message, String messageType) {
+    public boolean saveMessage(int conversationId, int senderId, String message, String messageType) {
         String sql = "INSERT INTO messages (conversation_id, sender_id, message_type, content, sent_at) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseUtility.getConnection();
@@ -16,10 +16,13 @@ public class MessageService {
             stmt.setString(4, message);  // For text messages
             stmt.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
 
-            stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false; // Failed to insert message
         }
     }
 }
+
 
